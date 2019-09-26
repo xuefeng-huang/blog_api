@@ -9,8 +9,9 @@ import (
 func SetupRouter() *gin.Engine {
 	router := gin.New()
 
-	article := new(controller.ArticleController)
-	router.GET("/articles", article.GetArticle)
+	articleController := new(controller.ArticleController)
+	router.GET("/articles/:id", articleController.GetArticleById)
+	router.POST("/articles", articleController.CreateArticle)
 
 	return router
 

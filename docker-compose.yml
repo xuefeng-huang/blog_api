@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - db
+    networks: 
+      - backend
+      
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+    networks: 
+      - backend
+    volumes:
+      - ./start.sh:/docker-entrypoint-initdb.d/start.sh
+
+networks: 
+  backend:

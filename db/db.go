@@ -12,7 +12,8 @@ var db *sql.DB
 func Init() {
 	var err error
 
-	db, err = sql.Open("mysql", "root:password@tcp(mysql:3306)/blog")
+	db, _ = sql.Open("mysql", "root:password@tcp(db:3306)/blog?collation=utf8mb4_general_ci")
+	err = db.Ping()
 	if err != nil {
 		log.Fatal(err.Error())
 	} else {
