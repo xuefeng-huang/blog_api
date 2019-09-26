@@ -11,6 +11,7 @@ func SetupRouter() *gin.Engine {
 
 	articleController := new(controller.ArticleController)
 	router.GET("/articles/:id", articleController.GetArticleById)
+	router.GET("/articles", articleController.GetAllArticles)
 	router.POST("/articles", articleController.CreateArticle)
 
 	return router

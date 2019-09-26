@@ -37,3 +37,20 @@ func (a *ArticleController) CreateArticle(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": err.Error(), "data": nil})
 	}
 }
+
+func (a *ArticleController) GetAllArticles(c *gin.Context) {
+	articleList, err := articleModel.GetAllArticles()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  http.StatusInternalServerError,
+			"message": "get all articles failed",
+			"data":    nil,
+		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"status":  http.StatusOK,
+			"message": "Success",
+			"data":    articleList,
+		})
+	}
+}

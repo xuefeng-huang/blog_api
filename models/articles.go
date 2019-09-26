@@ -5,7 +5,7 @@ import (
 )
 
 type Article struct {
-	Id      int
+	Id      int    `json:"id"`
 	Title   string `json:"title" binding:"required"`
 	Content string `json:"content" binding:"required"`
 	Author  string `json:"author" binding:"required"`
@@ -36,4 +36,21 @@ func (a *Article) CreateArticle() (int, error) {
 	}
 	defer stmt.Close()
 	return int(id), nil
+}
+
+func (a *Article) GetAllArticles() ([]Article, error) {
+	articleList := []Article{}
+	db := db.GetDB()
+
+	rows, err := db.Query("select id, title, content, author from articles")
+	if err != nil {
+		return articleList, err
+	}
+	for rows.Next() {
+		var article Article
+		rows.Scan(&article.Id, &article.Title, &article.Content, &article.Author)
+		articleList = append(articleList, article)
+	}
+	defer rows.Close()
+	return articleList, nil
 }
