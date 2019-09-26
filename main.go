@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	db.Init()
+	db.Init("blog")
 	server.Init()
 }
