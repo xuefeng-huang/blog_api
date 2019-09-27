@@ -11,12 +11,14 @@ type Article struct {
 	Author  string `json:"author" binding:"required"`
 }
 
-func (a *Article) GetArticleByID(id string) (article Article, err error) {
+func (a *Article) GetArticleByID(id string) (articles []Article, err error) {
 	db := db.GetDB()
+	var article Article
 
 	row := db.QueryRow("select id, title, content, author from articles where id = ?", id)
 	err = row.Scan(&article.Id, &article.Title, &article.Content, &article.Author)
-	return article, err
+	articles = append(articles, article)
+	return articles, err
 }
 
 func (a *Article) CreateArticle() (int, error) {

@@ -13,12 +13,12 @@ var articleModel = new(models.Article)
 
 func (a *ArticleController) GetArticleById(c *gin.Context) {
 	if c.Param("id") != "" {
-		article, err := articleModel.GetArticleByID(c.Param("id"))
+		articles, err := articleModel.GetArticleByID(c.Param("id"))
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "error getting article", "data": nil})
+			c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "error getting article", "data": nil})
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "message": "Success", "data": article})
+		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "message": "Success", "data": articles})
 		return
 	}
 	c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "bad request", "data": nil})
